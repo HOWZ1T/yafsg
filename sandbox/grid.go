@@ -45,7 +45,7 @@ func (g *Grid) Render() {
 	rl.UpdateTexture(g.Texture, pixelCols)
 }
 
-func (g *Grid) inBounds(x, y int) bool {
+func (g *Grid) InBounds(x, y int) bool {
 	return x >= 0 && x < g.Width && y >= 0 && y < g.Height
 }
 
@@ -53,13 +53,13 @@ func (g *Grid) solidRules(cellParticle, x, y int) {
 	xOffsets := []int{0, -1, 1} // checks in order, bottom, left, right
 	yOffset := 1
 
-	if !g.inBounds(x, y+yOffset) {
+	if !g.InBounds(x, y+yOffset) {
 		return
 	}
 
 	for _, xOffset := range xOffsets {
 		// skip out of bounds
-		if !g.inBounds(x+xOffset, y+yOffset) {
+		if !g.InBounds(x+xOffset, y+yOffset) {
 			continue
 		}
 
@@ -67,6 +67,37 @@ func (g *Grid) solidRules(cellParticle, x, y int) {
 		if g.Get(x+xOffset, y+1) == particles.Empty {
 			g.Set(x+xOffset, y+1, cellParticle)
 			g.Set(x, y, 0)
+			return
+		} else if g.Get(x+xOffset, y+1) == particles.Water {
+			/*
+				TODO:
+				- has undesired behaviour where water can climb up diagonally moving sand
+			*/
+			// if cell below is water, swap
+			g.Set(x+xOffset, y+1, cellParticle)
+			g.Set(x, y, particles.Water)
+
+			// if cell above is sand, randomly move water left, right, or not at all
+			if y-1 >= 0 && g.Get(x, y-1) == particles.Sand {
+				r := rl.GetRandomValue(0, 2)
+				if r == 0 {
+					if x-1 >= 0 && g.Get(x-1, y) == particles.Empty {
+						g.Set(x-1, y, particles.Water)
+						g.Set(x, y, particles.Empty)
+					} else if x+1 < g.Width && g.Get(x+1, y) == particles.Empty {
+						g.Set(x+1, y, particles.Water)
+						g.Set(x, y, particles.Empty)
+					}
+				} else if r == 1 {
+					if x+1 < g.Width && g.Get(x+1, y) == particles.Empty {
+						g.Set(x+1, y, particles.Water)
+						g.Set(x, y, particles.Empty)
+					} else if x-1 >= 0 && g.Get(x-1, y) == particles.Empty {
+						g.Set(x-1, y, particles.Water)
+						g.Set(x, y, particles.Empty)
+					}
+				}
+			}
 			return
 		}
 	}
@@ -88,7 +119,7 @@ func (g *Grid) liquidRules(cellParticle, x, y int) {
 		for _, xOffset := range xOffsets {
 			targetX := x + xOffset
 			targetY := y + yOffset
-			if !g.inBounds(targetX, targetY) {
+			if !g.InBounds(targetX, targetY) {
 				continue // skip out of bounds
 			}
 
@@ -114,6 +145,7 @@ func (g *Grid) Tick() error {
 
 			switch cellParticle {
 			case particles.Empty:
+			case particles.Concrete:
 				continue
 
 			case particles.Sand:
@@ -123,7 +155,7 @@ func (g *Grid) Tick() error {
 				g.liquidRules(cellParticle, x, y)
 
 			default:
-				return fmt.Errorf("unknown particle type: %d", cellParticle)
+				return fmt.Errorf("uhandled particle type: %d", cellParticle)
 			}
 		}
 	}
@@ -137,6 +169,9 @@ func (g *Grid) UpdateStats() {
 		switch cell {
 		case particles.Empty:
 			g.Stats.Empty++
+
+		case particles.Concrete:
+			g.Stats.Concrete++
 
 		case particles.Sand:
 			g.Stats.Sand++

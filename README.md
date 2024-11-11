@@ -3,12 +3,14 @@ Yet Another Falling Sand Game.
 
 ---
 
-This project is a work in progress and is just an excuse to mess around with
+This project is a work in progress and mostly to have fun messing around with
 implementing a falling sand simulation.
 
-If it develops into anything more, I'll be sure to update this README.
+---
+### Demo
+[![Early YASFG Demo Video on YouTube](https://img.youtube.com/vi/7FrXy7sJ4fo/0.jpg)](https://www.youtube.com/watch?v=7FrXy7sJ4fo)
 
-### TODO
+### Todos
 - [ ] Add gravity rules for particle acceleration when falling.
 - [ ] Add particle interaction rules, i.e. solids falls through liquids.
 - [ ] Add fixed solids.
@@ -18,6 +20,10 @@ If it develops into anything more, I'll be sure to update this README.
   - [ ] Bloom.
 - [ ] Add dirty rectangles to control which areas need updates.
 - [ ] Add multi-threading.
+
+### Bugs
+- [ ] Water has left bias when falling.
+- [ ] Sand has right bias when falling.
 
 ---
 

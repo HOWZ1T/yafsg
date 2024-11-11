@@ -3,15 +3,19 @@ package particles
 import rl "github.com/gen2brain/raylib-go/raylib"
 
 const (
-	Empty = 0
-	Sand  = 1
-	Water = 2
+	Empty = iota
+	Concrete
+	Sand
+	Water
 )
 
 func Color(particleType int) rl.Color {
 	switch particleType {
 	case Empty:
 		return rl.DarkPurple
+
+	case Concrete:
+		return rl.Gray
 
 	case Sand:
 		return rl.Beige
@@ -25,17 +29,20 @@ func Color(particleType int) rl.Color {
 }
 
 func Next(i int) int {
-	return (i + 1) % 3
+	return (i + 1) % 4
 }
 
 func Prev(i int) int {
-	return (i + 2) % 3
+	return (i + 3) % 4
 }
 
 func Name(i int) string {
 	switch i {
 	case Empty:
 		return "Empty"
+
+	case Concrete:
+		return "Concrete"
 
 	case Sand:
 		return "Sand"
