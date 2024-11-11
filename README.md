@@ -13,8 +13,8 @@ Click on the image to go to the demo video on Youtube.
 
 ### Todos
 - [ ] Add gravity rules for particle acceleration when falling.
-- [ ] Add particle interaction rules, i.e. solids falls through liquids.
-- [ ] Add fixed solids.
+- [x] Add particle interaction rules, i.e. solids falls through liquids.
+- [x] Add fixed solids.
 - [ ] fancy rendering with shaders:
   - [ ] Sand shader.
   - [ ] Water shader.
