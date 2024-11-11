@@ -8,6 +8,7 @@ implementing a falling sand simulation.
 
 ---
 ### Demo
+Click on the image to go to the demo video on Youtube.
 [![Early YASFG Demo Video on YouTube](https://img.youtube.com/vi/7FrXy7sJ4fo/0.jpg)](https://www.youtube.com/watch?v=7FrXy7sJ4fo)
 
 ### Todos
