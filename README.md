@@ -9,11 +9,15 @@ implementing a falling sand simulation.
 If it develops into anything more, I'll be sure to update this README.
 
 ### TODO
-- [ ] add gravity rules for particle acceleration when falling
-- [ ] add particle interaction rules, i.e. solids falls through liquids
-- [ ] add fixed solids
-- [ ] add dirty rectangles to control which areas need updates
-- [ ] add multi-threading
+- [ ] Add gravity rules for particle acceleration when falling.
+- [ ] Add particle interaction rules, i.e. solids falls through liquids.
+- [ ] Add fixed solids.
+- [ ] fancy rendering with shaders:
+  - [ ] Sand shader.
+  - [ ] Water shader.
+  - [ ] Bloom.
+- [ ] Add dirty rectangles to control which areas need updates.
+- [ ] Add multi-threading.
 
 ---
 
